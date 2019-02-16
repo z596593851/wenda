@@ -44,6 +44,7 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
                 }
             }
         }
+        logger.info("Handler列表初始化完成：",config.keySet().toString());
 
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -59,6 +60,7 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
 
                         EventModel eventModel = JSON.parseObject(message, EventModel.class);
                         if (!config.containsKey(eventModel.getType())) {
+                            logger.error(eventModel.getType().toString());
                             logger.error("不能识别的事件");
                             continue;
                         }

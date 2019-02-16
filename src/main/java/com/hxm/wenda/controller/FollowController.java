@@ -115,9 +115,9 @@ public class FollowController {
 
         boolean ret = followService.unfollow(hostHolder.getUser().getId(), EntityType.ENTITY_QUESTION, questionId);
 
-        eventProducer.fireEvent(new EventModel(EventType.UNFOLLOW)
-                .setActorId(hostHolder.getUser().getId()).setEntityId(questionId)
-                .setEntityType(EntityType.ENTITY_QUESTION).setEntityOwnerId(q.getUserId()));
+//        eventProducer.fireEvent(new EventModel(EventType.UNFOLLOW)
+//                .setActorId(hostHolder.getUser().getId()).setEntityId(questionId)
+//                .setEntityType(EntityType.ENTITY_QUESTION).setEntityOwnerId(q.getUserId()));
 
         Map<String, Object> info = new HashMap<>();
         info.put("id", hostHolder.getUser().getId());

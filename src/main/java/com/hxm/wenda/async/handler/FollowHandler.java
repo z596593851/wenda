@@ -10,11 +10,13 @@ import com.hxm.wenda.service.MessageService;
 import com.hxm.wenda.service.UserService;
 import com.hxm.wenda.util.WendaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+@Component
 public class FollowHandler implements EventHandler {
     @Autowired
     MessageService messageService;
@@ -25,9 +27,12 @@ public class FollowHandler implements EventHandler {
     @Override
     public void doHandle(EventModel model) {
         Message message = new Message();
-        message.setFromId(WendaUtil.SYSTEM_USERID);
-        message.setToId(model.getEntityOwnerId());
+        int fromId=WendaUtil.SYSTEM_USERID;
+        int toId=model.getEntityOwnerId();
+        message.setFromId(fromId);
+        message.setToId(toId);
         message.setCreatedDate(new Date());
+        message.setConversationId(fromId < toId ? String.format("%d_%d", fromId, toId) : String.format("%d_%d", toId, fromId));
         User user = userService.getUser(model.getActorId());
 
         if (model.getEntityType() == EntityType.ENTITY_QUESTION) {
